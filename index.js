@@ -31,17 +31,17 @@ const PORT = process.env.PORT;
 
 connect();
 
-const HOST = '192.168.56.1'
-app.use(cors({
-    origin: `http://${HOST}:${PORT}`,
-    credentials: true
-}))
-
+// const HOST = '192.168.56.1'
 // app.use(cors({
-
-//     origin: 'http://localhost:3000',
+//     origin: `http://${HOST}:${PORT}`,
 //     credentials: true
 // }))
+
+app.use(cors({
+
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true
+}))
 // Cấu hình thư mục tĩnh cho các file trong 'uploads'
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -57,13 +57,13 @@ app.use("/api/payments", paymentRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/review", reviewRoutes)
 
-app.listen(PORT, HOST, () => {
-    console.log(`sever is starting ${HOST}+${PORT}`);
-});
-
-
-// app.listen(PORT, () => {
-//     console.log(`sever is starting +${PORT}`);
+// app.listen(PORT, HOST, () => {
+//     console.log(`sever is starting ${HOST}+${PORT}`);
 // });
+
+
+app.listen(PORT, () => {
+    console.log(`sever is starting +${PORT}`);
+});
 
 //npx react-native run-android
